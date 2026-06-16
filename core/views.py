@@ -1,9 +1,43 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.contrib.auth.models import User
+from django.contrib.auth import authenticate, login
 
-# Create your views here.
+def tela_login(request):
+
+    if request.method == "POST":
+        usuario = request.POST.get("usuario")
+        senha = request.POST.get("senha")
+
+        user = authenticate(username=usuario, password=senha)
+
+        if user:
+            login(request, user)
+            return redirect("/home/")
+
+    return render(request, "core/login.html")
+
+
+def cadastro_usuario(request):
+
+    if request.method == "POST":
+        nome = request.POST.get("nome")
+        usuario = request.POST.get("usuario")
+        senha = request.POST.get("senha")
+
+        User.objects.create_user(
+            username=usuario,
+            first_name=nome,
+            password=senha
+        )
+
+        return redirect("/")
+
+    return render(request, "core/cadastro_usuario.html")
+
 
 def home(request):
-    return render(request, 'core/home_usuario.html')
+    return render(request, "core/home_usuario.html")
+
 
 def novo_chamado(request):
-    return render(request, 'core/novo_chamado.html')
+    return render(request, "core/novo_chamado.html")
