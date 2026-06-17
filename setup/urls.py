@@ -20,6 +20,6 @@ from core.views import home, novo_chamado
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', home),
-    path('novo_chamado/', novo_chamado)
+    path('', home, name='home'),
+    path('novo_chamado/', novo_chamado, name='novo_chamado')
 ]
