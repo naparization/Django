@@ -1,0 +1,39 @@
+{% extends "core/base.html" %}
+
+
+
+
+{% block body %}
+
+<div style="display: flex; justify-content: center; align-items: flex-end; margin: 0; height: 100vh;">
+    <div style="width: 90vh; height: 90vh; align-self: flex-end; opacity: 100%; background-color: rgb(54, 54, 54);">
+        <h1 style="text-align: center; color: white; font-style: italic; padding-top: 100px;">"{{chamado.Descricao}}"
+        </h1>
+        <h1 style="text-align: center; color: white; font-style: italic; padding-top: 100px;">Finalizar chamado:</h1>
+        <div style="text-align: center; justify-content: center; color: white;">
+            <form method="POST">
+                {% csrf_token %}
+
+                <div style="display: flex; flex-direction: column; align-items: center; gap: 16px; width: 100%;">
+
+                    <div style="display: flex; flex-direction: column; align-items: flex-start; width: 400px;">
+                        <label style="margin-top: 6px; font-size: 14px; color: white;">Comentário:</label>
+                        <textarea name="comentario"
+                            style="width: 100%; height: 150px; padding: 8px 12px; font-size: 15px; border: 1px solid #555; border-radius: 6px; background: #2a2a2a; color: white; box-sizing: border-box; resize: vertical;">{{ album.titulo }}</textarea>
+                    </div>
+
+
+
+                    <button action="{% url 'novo_chamado' %}" method="post"
+                        style="margin-top: 8px; padding: 9px 28px; font-size: 15px; border: 1px solid #777; border-radius: 6px; background: #3a3a3a; color: white; cursor: pointer;">
+                        Finalizar
+                    </button>
+
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

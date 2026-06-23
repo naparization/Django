@@ -4,12 +4,11 @@ from core.views import *
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-
     path("", tela_login),
-
     path("cadastro_usuario/", cadastro_usuario),
-
     path("home/", home, name='home'),
-
     path("novo_chamado/", novo_chamado, name='novo_chamado'),
+    path("lista_chamados/", listar_chamados, name='listar_chamados'),
+    path("funcionario/lista_chamados/", listar_chamados_todos, name='listar_chamados_todos'),
+    path("<int:chamado_id>/conclusao_chamado/", conclusao_chamado, name='conclusao_chamado' )
 ]

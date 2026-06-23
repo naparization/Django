@@ -1,0 +1,30 @@
+{% extends 'core/base.html' %}
+
+{% block body %}
+<div class="vstack gap-3 justify-content-center align-items-center">
+    {% for chamado in chamados %}
+
+    <div class="card text-bg-dark my-2 mx-3 w-100" style="max-width: 800px;">
+        <div class="card-header">#{{chamado.id}} | {{chamado.CategoriaId.Nome}}</div>
+        <div class="card-body">
+            <h5 class="card-title">"{{chamado.Descricao}}"</h5>
+            {% if chamado.Esta_Aberto == 1 %}
+            <p class="card-text">{{chamado.UsuarioId.first_name}} | Aberto</p>
+            {% else %}
+            <p class="card-text">{{chamado.UsuarioId.first_name}} | Fechado</p>
+            <button type="button" class="btn btn-light">Ver conclusão</button>
+            {% endif %}
+            {% if is_staff == True and chamado.Esta_Aberto == 1 %}
+            <p class="btn btn-danger">Cancelar</p>
+            <a class="btn btn-info" href="{% url 'conclusao_chamado' chamado.id %}">Finalizar Chamado</a>
+            {% endif %}
+        </div>
+
+    </div>
+    {% endfor %}
+
+
+
+
+</div>
+{% endblock %}
