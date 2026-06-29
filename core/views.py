@@ -52,13 +52,34 @@ from django.shortcuts import redirect, render
 
 @login_required
 def home(request):
-    return render(request, 'core/home_usuario.html')
+    is_staff = request.user.is_staff
+    if (is_staff): 
+        return render(request, 'core/home_usuario_adm.html')
+    else:
+        return render(request, 'core/home_usuario.html')
+
+@login_required
+def conclusao_chamado(request):
+    return render(request, 'core/home_usuario_adm.html')
+
+@login_required
+def visualizar_conclusao_chamado(request):
+    return render(request, 'core/home_usuario_adm.html')
+
+@login_required
+def adicionar_comentario(request):
+    return render(request, 'core/home_usuario_adm.html')
+
+@login_required
+def comentarios(request):
+    return render(request, 'core/home_usuario_adm.html')
 
 @login_required
 def listar_chamados(request):
 # (UsuarioId=request.user.id)
+    is_staff = request.user.is_staff
     chamados = Chamado.objects.filter(UsuarioId=request.user.id)
-    return render(request, 'core/lista_chamados.html', {'chamados': chamados})
+    return render(request, 'core/lista_chamados.html', {'chamados': chamados, 'is_staff': is_staff})
 
 @login_required
 def listar_chamados_todos(request):

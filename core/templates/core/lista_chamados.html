@@ -12,11 +12,23 @@
             <p class="card-text">{{chamado.UsuarioId.first_name}} | Aberto</p>
             {% else %}
             <p class="card-text">{{chamado.UsuarioId.first_name}} | Fechado</p>
-            <button type="button" class="btn btn-light">Ver conclusão</button>
             {% endif %}
-            {% if is_staff == True and chamado.Esta_Aberto == 1 %}
-            <p class="btn btn-danger">Cancelar</p>
+
+            {% if is_staff and chamado.Esta_Aberto %}
             <a class="btn btn-info" href="{% url 'conclusao_chamado' chamado.id %}">Finalizar Chamado</a>
+            {% elif chamado.Esta_Aberto == False %}
+            <a class="btn btn-info" href="{% url 'visualizar_conclusao_chamado' chamado.id %}">Visualizar Conclusão</a>
+            {% endif %}
+
+
+            {% if is_staff and chamado.Esta_Aberto %}
+            <a class="btn btn-light" href="{% url 'adicionar_comentario' chamado.id %}">Adicionar Comentário</a>
+            {% endif %}
+
+            <a class="btn btn-light" href="{% url 'comentarios' chamado.id %}">Comentários</a>
+
+            {% if chamado.Esta_Aberto == 1 %}
+            <a class="btn btn-danger">Cancelar Chamado</a>
             {% endif %}
         </div>
 
