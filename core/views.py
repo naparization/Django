@@ -91,8 +91,10 @@ def adicionar_comentario(request, chamado_id):
     
 
 @login_required
-def comentarios(request):
-    return render(request, 'core/home_usuario_adm.html')
+def comentarios(request, chamado_id):
+    chamado = Chamado.objects.get(id=chamado_id)
+    comentarios = Comentario.objects.filter(ChamadoID=chamado_id)
+    return render(request, 'core/comentarios.html', {'chamado': chamado, 'comentarios': comentarios})
 
 @login_required
 def listar_chamados(request):
@@ -123,10 +125,9 @@ def novo_chamado(request):
 @login_required
 def conclusao_chamado(request, chamado_id):
     if request.method == "POST":
-        print('s')
         comentario = request.POST.get('comentario')
-        Comentario.objects.create(Mensagem= comentario, ChamadoId= chamado_id)
-        return render(request, "core/login.html")
+        Chamado.objects.filter(id=chamado_id).update(Esta_Aberto=False, Comentario=comentario)
+        return home(request)
 
 
     if (chamado_id < 1):
