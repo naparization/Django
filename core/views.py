@@ -126,7 +126,7 @@ def novo_chamado(request):
 def conclusao_chamado(request, chamado_id):
     if request.method == "POST":
         comentario = request.POST.get('comentario')
-        Chamado.objects.filter(id=chamado_id).update(Esta_Aberto=False)
+        Chamado.objects.filter(id=chamado_id).update(Esta_Aberto=False, Comentario=comentario)
         return home(request)
 
 
