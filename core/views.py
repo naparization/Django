@@ -67,8 +67,28 @@ def visualizar_conclusao_chamado(request):
     return render(request, 'core/home_usuario_adm.html')
 
 @login_required
-def adicionar_comentario(request):
-    return render(request, 'core/home_usuario_adm.html')
+def adicionar_comentario(request, chamado_id):
+
+    chamado = Chamado.objects.get(id=chamado_id)
+
+    if request.method == "POST":
+        comentario = request.POST.get("comentario")
+
+        Comentario.objects.create(
+            Mensagem=comentario,
+            ChamadoID=chamado
+        )
+
+        return redirect("listar_chamados")
+
+    return render(
+        request,
+        "core/adicionar_comentario.html",
+        {
+            "chamado": chamado
+        }
+    )
+    
 
 @login_required
 def comentarios(request, chamado_id):

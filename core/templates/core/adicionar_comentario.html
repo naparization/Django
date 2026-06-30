@@ -1,0 +1,42 @@
+{% extends 'core/base.html' %}
+
+{% block body %}
+
+<div class="container mt-4">
+
+    <div class="card">
+        <div class="card-header">
+            Adicionar Comentário
+        </div>
+
+        <div class="card-body">
+
+            <form method="POST">
+                {% csrf_token %}
+
+                <div class="mb-3">
+                    <label class="form-label">Comentário</label>
+
+                    <textarea
+                        class="form-control"
+                        name="comentario"
+                        rows="5"
+                        required></textarea>
+                </div>
+
+                <button type="submit" class="btn btn-success">
+                    Salvar Comentário
+                </button>
+
+                <a href="{% url 'listar_chamados' %}" class="btn btn-secondary">
+                    Voltar
+                </a>
+
+            </form>
+
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}
