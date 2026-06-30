@@ -23,6 +23,7 @@ class Chamado(models.Model):
     Descricao = models.TextField(default='Nada Informado.')
     Prioridade = models.IntegerField(max_length=1)
     Esta_Aberto = models.BooleanField(default=False)
+    Comentario = models.TextField(default='Nada Informado.')
 
 class Comentario(models.Model):
     Mensagem = models.TextField()
