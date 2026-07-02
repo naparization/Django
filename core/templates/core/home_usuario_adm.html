@@ -20,8 +20,28 @@
                     href="{% url 'novo_chamado' %}">Novo
                     Chamado</a>
                 <a style="background-color: transparent; color: rgb(255, 247, 224); border: 2px solid rgb(255, 247, 224); font-weight: 600; border-radius: 4px; padding: 6px 12px;"
-                    href="{% url 'listar_chamados' %}">Listar
-                    Chamados</a>
+                    href="{% url 'listar_chamados_todos' %}">Meus Chamados</a>
+                <a style="background-color: transparent; color: rgb(255, 247, 224); border: 2px solid rgb(255, 247, 224); font-weight: 600; border-radius: 4px; padding: 6px 12px;"
+                    href="{% url 'listar_chamados_todos' %}">Chamados Ativos</a>
+
+
+            </div>
+            <div class="justify-content-center align-items-center" style="justify-content: center; text-align: center;">
+                <br>
+
+
+                <div class="card text-bg-secondary mb-3 align-items-center justify-content-center mx-auto "
+                    style="max-width: 18rem; ">
+                    <div class="card-body bg-dark"
+                        style="border-left: 40px solid rgb(255, 247, 224); padding-right: 15px;">
+                        <h5 class="card-title text-start">{{Usuario.first_name}}</h5>
+                        <p class="card-text text-start">Atendimentos Finalizados: 00</p>
+                        <p class="card-text text-start">Meus Tickets Abertos: 00</p>
+                        <p class="card-text text-start">Meus Tickets Concluídos: 00</p>
+                        <a class="btn btn-light">Editar</a>
+                        <a class="btn btn-danger" href="{% url 'fazer_logout' %}">Logout</a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

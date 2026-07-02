@@ -27,6 +27,7 @@ class Chamado(models.Model):
 
 class Comentario(models.Model):
     Mensagem = models.TextField()
+    UsuarioId = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     ChamadoID = models.ForeignKey(Chamado, on_delete=models.CASCADE)
 
 

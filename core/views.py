@@ -2,7 +2,7 @@ import json
 
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 
 
@@ -53,10 +53,20 @@ from django.shortcuts import redirect, render
 @login_required
 def home(request):
     is_staff = request.user.is_staff
+    user = request.user.id
+    Usuario = User.objects.get(id = user)
+    print(Usuario)
+
+
     if (is_staff): 
-        return render(request, 'core/home_usuario_adm.html')
+        return render(request, 'core/home_usuario_adm.html', {'Usuario': Usuario})
     else:
         return render(request, 'core/home_usuario.html')
+
+@login_required
+def fazer_logout(request):
+    logout(request)
+    return tela_login(request)
 
 @login_required
 def conclusao_chamado(request):
@@ -79,7 +89,7 @@ def adicionar_comentario(request, chamado_id):
             ChamadoID=chamado
         )
 
-        return redirect("listar_chamados")
+        return comentarios(request, chamado_id)
 
     return render(
         request,
@@ -102,6 +112,8 @@ def listar_chamados(request):
     is_staff = request.user.is_staff
     chamados = Chamado.objects.filter(UsuarioId=request.user.id)
     return render(request, 'core/lista_chamados.html', {'chamados': chamados, 'is_staff': is_staff})
+
+    
 
 @login_required
 def listar_chamados_todos(request):
@@ -137,6 +149,20 @@ def conclusao_chamado(request, chamado_id):
 
     return render(request, 'core/conclusao_chamado.html', {'chamado': chamado})
 
+@login_required
+def deletar_chamado(request, chamado_id):
+    is_staff = request.user.is_staff
+    user_id = request.user.id
+    chamado = Chamado.objects.get(id = chamado_id)
+    print(chamado.UsuarioId_id)
+
+
+    if (chamado.UsuarioId_id == user_id or is_staff):
+        chamado.delete()
+        return home(request)
+        
+    else:
+        return home(request)
 
 
 

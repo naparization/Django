@@ -28,7 +28,7 @@
             <a class="btn btn-light" href="{% url 'comentarios' chamado.id %}">Comentários</a>
 
             {% if chamado.Esta_Aberto == 1 %}
-            <a class="btn btn-danger">Cancelar Chamado</a>
+            <a class="btn btn-danger" href="{% url 'deletar_chamado' chamado.id %}">Cancelar Chamado</a>
             {% endif %}
         </div>
 
