@@ -16,8 +16,6 @@
 
             {% if is_staff and chamado.Esta_Aberto %}
             <a class="btn btn-info" href="{% url 'conclusao_chamado' chamado.id %}">Finalizar Chamado</a>
-            {% elif chamado.Esta_Aberto == False %}
-            <a class="btn btn-info" href="{% url 'visualizar_conclusao_chamado' chamado.id %}">Visualizar Conclusão</a>
             {% endif %}
 
 

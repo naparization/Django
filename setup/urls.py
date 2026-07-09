@@ -16,4 +16,5 @@ urlpatterns = [
     path("<int:chamado_id>/adicionar_comentario/", adicionar_comentario, name='adicionar_comentario'),
     path("<int:chamado_id>/deletar_chamado/", deletar_chamado, name='deletar_chamado'),
     path("logout/", fazer_logout, name='fazer_logout'),
+    path("<int:comentario_id>/deletar_comentario/", deletar_comentario, name='deletar_comentario'),
 ]

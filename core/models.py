@@ -21,7 +21,7 @@ class Chamado(models.Model):
     UsuarioId = models.ForeignKey(User, on_delete=models.CASCADE, null=False)
     CategoriaId = models.ForeignKey(Categoria, on_delete=models.CASCADE, null=False)
     Descricao = models.TextField(default='Nada Informado.')
-    Prioridade = models.IntegerField(max_length=1)
+    Prioridade = models.IntegerField()
     Esta_Aberto = models.BooleanField(default=False)
     Comentario = models.TextField(default='Nada Informado.')
 

@@ -4,6 +4,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 
 
 def tela_login(request):
@@ -11,16 +12,19 @@ def tela_login(request):
     if request.method == "POST":
         usuario = request.POST.get("usuario")
         senha = request.POST.get("senha")
-
+        
         user = authenticate(username=usuario, password=senha)
 
         if user:
             login(request, user)
+            messages.success(request, 'Login realizado com sucesso.')
             return redirect("/home/")
+        else:
+            messages.error(request, 'Não foi possível realizar login, por favor tente novamente.')
 
     return render(request, "core/login.html")
 
-from core.models import Chamado, Identificador, Comentario
+from core.models import Categoria, Chamado, Identificador, Comentario
 
 def cadastro_usuario(request):
 
@@ -52,21 +56,20 @@ from django.shortcuts import redirect, render
 
 @login_required
 def home(request):
+
     is_staff = request.user.is_staff
     user = request.user.id
     Usuario = User.objects.get(id = user)
-    print(Usuario)
-
-
     if (is_staff): 
         return render(request, 'core/home_usuario_adm.html', {'Usuario': Usuario})
     else:
         return render(request, 'core/home_usuario.html')
-
+    
 @login_required
 def fazer_logout(request):
     logout(request)
-    return tela_login(request)
+    messages.success(request, 'Logout realizado com sucesso, até a próxima.')
+    return redirect("/")
 
 @login_required
 def conclusao_chamado(request):
@@ -83,11 +86,18 @@ def adicionar_comentario(request, chamado_id):
 
     if request.method == "POST":
         comentario = request.POST.get("comentario")
+        user_id = request.user
 
-        Comentario.objects.create(
-            Mensagem=comentario,
-            ChamadoID=chamado
-        )
+        try:
+            Comentario.objects.create(
+                Mensagem=comentario,
+                UsuarioId=user_id,
+                ChamadoID=chamado
+                )
+            messages.success(request, 'Comentário adicionado.')
+        except: 
+            messages.error(request, 'Não foi possível adicionar comentários.')
+
 
         return comentarios(request, chamado_id)
 
@@ -102,9 +112,11 @@ def adicionar_comentario(request, chamado_id):
 
 @login_required
 def comentarios(request, chamado_id):
+    id_usuario = request.user.id
+    is_staff = request.user.is_staff
     chamado = Chamado.objects.get(id=chamado_id)
     comentarios = Comentario.objects.filter(ChamadoID=chamado_id)
-    return render(request, 'core/comentarios.html', {'chamado': chamado, 'comentarios': comentarios})
+    return render(request, 'core/comentarios.html', {'chamado': chamado, 'comentarios': comentarios, 'is_staff': is_staff, 'id_usuario': id_usuario})
 
 @login_required
 def listar_chamados(request):
@@ -129,20 +141,27 @@ def novo_chamado(request):
         categoria_id = request.POST.get('categoria')
         Esta_Aberto = True
         prioridade = request.POST.get('prioridade')
-        Chamado.objects.create(UsuarioId_id= request.user.id, CategoriaId_id = categoria_id, Descricao = descricao, Prioridade = prioridade, Esta_Aberto = Esta_Aberto)
+        try:
+            Chamado.objects.create(UsuarioId_id= request.user.id, CategoriaId_id = categoria_id, Descricao = descricao, Prioridade = prioridade, Esta_Aberto = Esta_Aberto)
+            messages.success(request, 'Chamado criado.')
+        except:
+            messages.error(request, 'Ocorreu um erro ao gerar este chamado. Tente novamente.')
 
         return redirect('home')
-    return render(request, 'core/novo_chamado.html')
+    categorias = Categoria.objects.all() 
+    return render(request, 'core/novo_chamado.html', {'categorias': categorias})
 
 @login_required
 def conclusao_chamado(request, chamado_id):
     if request.method == "POST":
         comentario = request.POST.get('comentario')
         Chamado.objects.filter(id=chamado_id).update(Esta_Aberto=False, Comentario=comentario)
+        messages.success(request, 'Chamado concluído.')
         return home(request)
 
 
     if (chamado_id < 1):
+        messages.error(request, 'Ocorreu um erro.')
         return render(request, "core/login.html")
 
     chamado = Chamado.objects.get(id=chamado_id)
@@ -159,11 +178,28 @@ def deletar_chamado(request, chamado_id):
 
     if (chamado.UsuarioId_id == user_id or is_staff):
         chamado.delete()
+        messages.success(request, 'Chamado cancelado.')
         return home(request)
         
     else:
         return home(request)
 
+@login_required
+def deletar_comentario(request, comentario_id):
+    is_staff = request.user.is_staff
+    user_id = request.user.id
+    comentario = Comentario.objects.get(id = comentario_id)
+    print(comentario.UsuarioId_id)
+
+
+    if (comentario.UsuarioId_id == user_id or is_staff):
+        comentario.delete()
+        messages.success(request, 'Comentário removido.')
+        return home(request)
+        
+    else:
+        messages.error(request, 'Ação não permitida.')
+        return home(request)
 
 
     
