@@ -13,15 +13,15 @@
 
                     <div style="display: flex; flex-direction: column; align-items: flex-start; width: 400px;">
                         <label style="margin-top: 6px; font-size: 14px; color: white;">Tipo:</label>
-                        <textarea name="descricao"
-                            style="width: 100%; height: 150px; padding: 8px 12px; font-size: 15px; border: 1px solid #555; border-radius: 6px; background: #2a2a2a; color: white; box-sizing: border-box; resize: vertical;">{{ album.titulo }}</textarea>
+                        <input required name="descricao"
+                            style="width: 100%; height: 40; padding: 8px 12px; font-size: 15px; border: 1px solid #555; border-radius: 6px; background: #2a2a2a; color: white; box-sizing: border-box; resize: vertical;"></input>
                     </div>
 
 
 
 
 
-                    <button action="{% url 'novo_chamado' %}" method="post"
+                    <button action="{% url 'nova_categoria' %}" method="post"
                         style="margin-top: 8px; padding: 9px 28px; font-size: 15px; border: 1px solid #777; border-radius: 6px; background: #3a3a3a; color: white; cursor: pointer;">
                         Salvar
                     </button>

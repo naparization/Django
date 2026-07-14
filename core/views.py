@@ -88,6 +88,11 @@ def adicionar_comentario(request, chamado_id):
         comentario = request.POST.get("comentario")
         user_id = request.user
 
+        if not comentario:
+            messages.error(request, 'O comentário não pode estar vazio.')
+            return comentarios(request, chamado_id)
+
+
         try:
             Comentario.objects.create(
                 Mensagem=comentario,
@@ -123,7 +128,12 @@ def listar_chamados(request):
 # (UsuarioId=request.user.id)
     is_staff = request.user.is_staff
     chamados = Chamado.objects.filter(UsuarioId=request.user.id)
-    return render(request, 'core/lista_chamados.html', {'chamados': chamados, 'is_staff': is_staff})
+    tem_chamados = chamados.exists()
+    if (tem_chamados == False):
+        messages.warning(request, 'Você não possui chamados ativos.')
+        return home(request)
+    else:
+        return render(request, 'core/lista_chamados.html', {'chamados': chamados, 'is_staff': is_staff})
 
     
 
@@ -200,6 +210,37 @@ def deletar_comentario(request, comentario_id):
     else:
         messages.error(request, 'Ação não permitida.')
         return home(request)
+    
+@login_required
+def nova_categoria(request):
+
+    if request.method == "POST":
+        descricao = request.POST.get("descricao")
+        if not descricao:
+                messages.error(request, 'Categoria não pode estar vazia.')
+                return render(request, 'core/nova_categoria.html')
+        
+        CategoriaJaExiste = Categoria.objects.filter(Nome=descricao).exists()
+        if CategoriaJaExiste:
+            messages.error(request, 'Essa categoria já existe.')
+            return render(request, 'core/nova_categoria.html')
+        
+        try: 
+            Categoria.objects.create(Nome=descricao)
+            messages.success(request, 'Categoria adicionada.')
+            return home(request)
+        except:
+            messages.error(request, 'Não foi possível salvar esta categoria.')
+            return home(request)
+
+    is_staff = request.user.is_staff
+    if (is_staff):
+        return render(request, 'core/nova_categoria.html')
+    return home(request)
+
+
+
+
 
 
     
