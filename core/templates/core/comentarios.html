@@ -1,39 +1,55 @@
 {% extends "core/base.html" %}
 
 {% block body %}
-<div class="vstack gap-3">
 
-    <div class="card text-bg-dark my-2 mx-3 w-100" style="max-width: 800px;">
-        <div class="card-header">#{{chamado.id}} | {{chamado.CategoriaId.Nome}}</div>
-        <div class="card-body">
-            <h5 class="card-title">"{{chamado.Descricao}}"</h5>
-            <p class="card-text">{{chamado.UsuarioId.first_name}}</p>
+<body
+    style="background-color: rgb(255, 247, 224); margin: 0; min-height: 100vh; font-family: 'Segoe UI', Arial, sans-serif;">
+
+    <div class="vstack gap-3 align-items-center" style="padding: 40px 20px;">
+
+        <div class="card my-2 mx-3 w-100"
+            style="max-width: 800px; background: linear-gradient(160deg, rgb(60,60,60), rgb(40,40,40)); border: none; border-radius: 12px; box-shadow: 0 8px 24px rgba(0,0,0,0.25);">
+            <div class="card-header"
+                style="background-color: rgba(255,247,224,0.08); color: rgb(255,247,224); font-weight: 600; border-bottom: 1px solid rgba(255,247,224,0.15); padding: 12px 16px;">
+                #{{chamado.id}} | {{chamado.CategoriaId.Nome}}
+            </div>
+            <div class="card-body" style="padding: 20px;">
+                <h5 class="card-title" style="color: rgb(255,247,224); font-style: italic; font-weight: 400;">
+                    "{{chamado.Descricao}}"</h5>
+                <p class="card-text" style="color: rgba(255,247,224,0.75); margin-bottom: 0;">
+                    {{chamado.UsuarioId.first_name}}</p>
+            </div>
         </div>
+
+        {% for comentario in comentarios %}
+
+        <div class="card"
+            style="max-width: 800px; background: white; border: none; border-radius: 12px; box-shadow: 0 4px 16px rgba(0,0,0,0.12);">
+            <div class="card-header"
+                style="background-color: rgb(54,54,54); color: rgb(255,247,224); font-weight: 600; border-bottom: none; border-radius: 12px 12px 0 0; padding: 10px 16px; display: flex; justify-content: space-between; align-items: center;">
+                <span># {{comentario.id}}</span>
+                {% if is_staff or comentario.UsuarioId.id == id_usuario %}
+                <a class="btn btn-danger btn-sm"
+                    style="border-radius: 6px; font-weight: 600; box-shadow: 0 4px 12px rgba(0,0,0,0.25); transition: transform 0.2s ease;"
+                    onmouseover="this.style.transform='translateY(-2px)';"
+                    onmouseout="this.style.transform='translateY(0)';"
+                    href="{% url 'deletar_comentario' comentario.id %}">X</a>
+                {% endif %}
+            </div>
+            <div class="card-body" style="padding: 18px;">
+                <blockquote class="blockquote mb-0">
+                    <p style="color: rgb(54,54,54);">"{{comentario.Mensagem}}"</p>
+                    <footer class="blockquote-footer" style="color: rgba(54,54,54,0.6);">
+                        {{comentario.UsuarioId.first_name}} # {{comentario.UsuarioId.id}}
+                    </footer>
+                </blockquote>
+            </div>
+        </div>
+
+        {% endfor %}
+
     </div>
 
-    <h1>Comentários:</h1>
-
-    {% for comentario in comentarios %}
-
-    <div class="card">
-        <div class="card-header">
-            # {{comentario.id}}
-            {% if is_staff or comentario.UsuarioId.id == id_usuario %}
-            <a class="btn btn-danger" href="{% url 'deletar_comentario' comentario.id %}">X</a>
-            {% endif %}
-        </div>
-        <div class="card-body">
-            <blockquote class="blockquote mb-0">
-                <p>"{{comentario.Mensagem}}"</p>
-                <footer class="blockquote-footer">{{comentario.UsuarioId.first_name}} # {{comentario.UsuarioId.id}}
-                </footer>
-            </blockquote>
-        </div>
-    </div>
-
-    {% endfor %}
-
-</div>
-
+</body>
 
 {% endblock %}

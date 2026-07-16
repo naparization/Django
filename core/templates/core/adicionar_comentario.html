@@ -2,41 +2,55 @@
 
 {% block body %}
 
-<div class="container mt-4">
+<body
+    style="background-color: rgb(255, 247, 224); margin: 0; min-height: 100vh; font-family: 'Segoe UI', Arial, sans-serif;">
 
-    <div class="card">
-        <div class="card-header">
-            Adicionar Comentário
+    <div class="container mt-4" style="max-width: 700px; padding-top: 40px;">
+
+        <div class="card"
+            style="background: linear-gradient(160deg, rgb(60,60,60), rgb(40,40,40)); border: none; border-radius: 12px; box-shadow: 0 8px 24px rgba(0,0,0,0.25);">
+
+            <div class="card-header"
+                style="background-color: rgba(255,247,224,0.08); color: rgb(255,247,224); font-weight: 600; font-style: italic; border-bottom: 1px solid rgba(255,247,224,0.15); padding: 14px 20px;">
+                Adicionar Comentário
+            </div>
+
+            <div class="card-body" style="padding: 24px;">
+
+                <form method="POST">
+                    {% csrf_token %}
+
+                    <div class="mb-3">
+                        <label class="form-label" style="color: rgb(255,247,224); font-weight: 600;">Comentário</label>
+
+                        <textarea class="form-control" name="comentario" rows="5"
+                            style="background-color: rgba(255,247,224,0.08); border: 1px solid rgba(255,247,224,0.25); color: white; border-radius: 6px;"
+                            required></textarea>
+                    </div>
+
+                    <div style="display: flex; gap: 10px;">
+                        <button type="submit"
+                            style="background-color: rgb(255, 247, 224); color: rgb(54, 54, 54); border: none; font-weight: 600; border-radius: 6px; padding: 8px 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.25); transition: transform 0.2s ease, box-shadow 0.2s ease;"
+                            onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 16px rgba(0,0,0,0.35)';"
+                            onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 12px rgba(0,0,0,0.25)';">
+                            Salvar Comentário
+                        </button>
+
+                        <a href="{% url 'listar_chamados' %}"
+                            style="background-color: transparent; color: rgb(255, 247, 224); border: 2px solid rgb(255, 247, 224); font-weight: 600; border-radius: 6px; padding: 6px 18px; text-decoration: none; display: inline-flex; align-items: center; transition: background-color 0.2s ease, color 0.2s ease;"
+                            onmouseover="this.style.backgroundColor='rgb(255,247,224)'; this.style.color='rgb(54,54,54)';"
+                            onmouseout="this.style.backgroundColor='transparent'; this.style.color='rgb(255,247,224)';">
+                            Voltar
+                        </a>
+                    </div>
+
+                </form>
+
+            </div>
         </div>
 
-        <div class="card-body">
-
-            <form method="POST">
-                {% csrf_token %}
-
-                <div class="mb-3">
-                    <label class="form-label">Comentário</label>
-
-                    <textarea
-                        class="form-control"
-                        name="comentario"
-                        rows="5"
-                        required></textarea>
-                </div>
-
-                <button type="submit" class="btn btn-success">
-                    Salvar Comentário
-                </button>
-
-                <a href="{% url 'listar_chamados' %}" class="btn btn-secondary">
-                    Voltar
-                </a>
-
-            </form>
-
-        </div>
     </div>
 
-</div>
+</body>
 
 {% endblock %}

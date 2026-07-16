@@ -121,6 +121,10 @@ def comentarios(request, chamado_id):
     is_staff = request.user.is_staff
     chamado = Chamado.objects.get(id=chamado_id)
     comentarios = Comentario.objects.filter(ChamadoID=chamado_id)
+    if not comentarios:
+        messages.error(request, 'Não existem comentários.')
+        referer = request.META.get('HTTP_REFERER')
+        return redirect(referer)
     return render(request, 'core/comentarios.html', {'chamado': chamado, 'comentarios': comentarios, 'is_staff': is_staff, 'id_usuario': id_usuario})
 
 @login_required
@@ -141,7 +145,7 @@ def listar_chamados(request):
 def listar_chamados_todos(request):
 # (UsuarioId=request.user.id)
     is_staff = request.user.is_staff
-    chamados = Chamado.objects.all()
+    chamados = Chamado.objects.all().filter(Esta_Aberto=True).order_by('id')
     return render(request, 'core/lista_chamados.html', {'chamados': chamados, 'is_staff': is_staff})
     
 @login_required
@@ -163,6 +167,7 @@ def novo_chamado(request):
 
 @login_required
 def conclusao_chamado(request, chamado_id):
+    is_staff = request.user.is_staff
     if request.method == "POST":
         comentario = request.POST.get('comentario')
         Chamado.objects.filter(id=chamado_id).update(Esta_Aberto=False, Comentario=comentario)
@@ -170,8 +175,7 @@ def conclusao_chamado(request, chamado_id):
         return home(request)
 
 
-    if (chamado_id < 1):
-        messages.error(request, 'Ocorreu um erro.')
+    if (chamado_id < 1 or not is_staff):
         return render(request, "core/login.html")
 
     chamado = Chamado.objects.get(id=chamado_id)
