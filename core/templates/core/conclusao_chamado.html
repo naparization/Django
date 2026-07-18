@@ -18,16 +18,22 @@
                 Finalizar chamado:</h1>
 
             <div style="text-align: center; justify-content: center; color: white;">
-                <form method="POST" action="{% url 'novo_chamado' %}">
+                <form method="POST" action="{% url 'conclusao_chamado' chamado.id %}">
                     {% csrf_token %}
 
                     <div
                         style="display: flex; flex-direction: column; align-items: center; gap: 10px; width: 100%; margin-top: 30px;">
 
                         <label style="font-size: 14px; color: rgb(255,247,224); font-weight: 600;">Comentário:</label>
-                        <textarea name="comentario"
+                        <textarea required name="comentario"
                             style="width: 400px; max-width: 80%; height: 150px; padding: 12px 14px; font-size: 15px; border: 1px solid rgba(255,247,224,0.25); border-radius: 8px; background: rgba(255,247,224,0.08); color: rgb(255,247,224); box-sizing: border-box; resize: vertical;"
-                            placeholder="Descreva a conclusão do chamado..."></textarea>
+                            placeholder=""></textarea>
+
+                        <label style="font-size: 14px; color: rgb(255,247,224); font-weight: 600;">Quem finalizou a
+                            tarefa:</label>
+                        <input required name="finalizador"
+                            style="width: 400px; max-width: 80%; height: 50px; padding: 12px 14px; font-size: 15px; border: 1px solid rgba(255,247,224,0.25); border-radius: 8px; background: rgba(255,247,224,0.08); color: rgb(255,247,224); box-sizing: border-box; resize: vertical;"
+                            placeholder="Fulano de Tal"></input>
 
                         <button type="submit"
                             style="margin-top: 8px; padding: 10px 30px; font-size: 15px; font-weight: 600; border: none; border-radius: 6px; background-color: rgb(255, 247, 224); color: rgb(54, 54, 54); cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.25); transition: transform 0.2s ease, box-shadow 0.2s ease;"

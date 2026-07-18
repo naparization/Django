@@ -131,7 +131,7 @@ def comentarios(request, chamado_id):
 def listar_chamados(request):
 # (UsuarioId=request.user.id)
     is_staff = request.user.is_staff
-    chamados = Chamado.objects.filter(UsuarioId=request.user.id)
+    chamados = Chamado.objects.filter(UsuarioId=request.user.id).order_by('-Esta_Aberto')
     tem_chamados = chamados.exists()
     if (tem_chamados == False):
         messages.warning(request, 'Você não possui chamados ativos.')
@@ -145,7 +145,7 @@ def listar_chamados(request):
 def listar_chamados_todos(request):
 # (UsuarioId=request.user.id)
     is_staff = request.user.is_staff
-    chamados = Chamado.objects.all().filter(Esta_Aberto=True).order_by('id')
+    chamados = Chamado.objects.all().filter(Esta_Aberto=True).order_by('-Esta_Aberto')
     return render(request, 'core/lista_chamados.html', {'chamados': chamados, 'is_staff': is_staff})
     
 @login_required
@@ -170,7 +170,8 @@ def conclusao_chamado(request, chamado_id):
     is_staff = request.user.is_staff
     if request.method == "POST":
         comentario = request.POST.get('comentario')
-        Chamado.objects.filter(id=chamado_id).update(Esta_Aberto=False, Comentario=comentario)
+        finalizador = request.POST.get('finalizador')
+        Chamado.objects.filter(id=chamado_id).update(Esta_Aberto=False, Comentario=comentario, Finalizador=finalizador)
         messages.success(request, 'Chamado concluído.')
         return home(request)
 
@@ -217,6 +218,10 @@ def deletar_comentario(request, comentario_id):
     
 @login_required
 def nova_categoria(request):
+    is_staff = request.user.is_staff
+
+    if not is_staff:
+        return home(request)
 
     if request.method == "POST":
         descricao = request.POST.get("descricao")

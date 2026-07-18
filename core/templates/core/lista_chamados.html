@@ -2,11 +2,14 @@
 
 {% block body %}
 
+
+
 <body
     style="background-color: rgb(255, 247, 224); min-height: 100vh; margin: 0; font-family: 'Segoe UI', Arial, sans-serif;">
 
     <div class="vstack gap-3 justify-content-center align-items-center" style="padding: 40px 20px;">
         {% for chamado in chamados %}
+
 
         <div class="card my-2 mx-3 w-100"
             style="max-width: 800px; background: linear-gradient(160deg, rgb(60,60,60), rgb(40,40,40)); border: none; border-radius: 12px; box-shadow: 0 8px 24px rgba(0,0,0,0.25); overflow: hidden;">
@@ -34,32 +37,69 @@
 
                 <div style="display: flex; flex-wrap: wrap; gap: 10px;">
 
+                    {% if chamado.Esta_Aberto == False %}
+                    <button
+                        style="background-color: transparent;  color: rgb(255, 247, 224);  border: 2px solid rgb(255, 247, 224); font-weight: 600; border-radius: 6px; padding: 8px 18px; transition: all 0.2s ease, color 0.2s ease; text-decoration: none; display: inline-block;"
+                        onmouseover="this.style.backgroundColor='rgb(255,247,224)'; this.style.color='rgb(54,54,54)'; this.style.transform='translateY(-2px)';"
+                        onmouseout="this.style.backgroundColor='transparent'; this.style.color='rgb(255,247,224)'; this.style.transform='translateY(0)';"
+                        data-bs-toggle="modal" data-bs-target="#exampleModal{{chamado.id}}">Visualizar
+                        Conclusão</button>
+                    {% endif %}
+
+
+                    <div class="modal fade" id="exampleModal{{chamado.id}}" tabindex="-1" role="dialog"
+                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content"
+                                style="background: linear-gradient(160deg, rgb(60,60,60), rgb(40,40,40)); border: none; border-radius: 12px; box-shadow: 0 10px 40px rgba(0,0,0,0.35);">
+
+                                <div class="modal-header" style="border-bottom: 1px solid rgba(255,247,224,0.15);">
+                                    <h5 class="modal-title" id="exampleModalLabel"
+                                        style="color: rgb(255,247,224); font-style: italic; font-weight: 700;">
+                                        Conclusão:</h5>
+                                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+
+                                <div class="modal-body" style="font-style: italic; color: rgba(255,247,224,0.85);">
+                                    "{{chamado.Comentario}}" <br><br>
+                                    - <a>{{chamado.Finalizador}}</a>
+                                </div>
+
+
+                                <div class="modal-footer" style="border-top: 1px solid rgba(255,247,224,0.15);">
+                                    <button type="button"
+                                        style="background-color: transparent; color: rgb(255, 247, 224); border: 2px solid rgb(255, 247, 224); font-weight: 600; border-radius: 6px; padding: 6px 18px; transition: background-color 0.2s ease, color 0.2s ease;"
+                                        onmouseover="this.style.backgroundColor='rgb(255,247,224)'; this.style.color='rgb(54,54,54)';"
+                                        onmouseout="this.style.backgroundColor='transparent'; this.style.color='rgb(255,247,224)';"
+                                        data-bs-dismiss="modal">Fechar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
                     {% if is_staff and chamado.Esta_Aberto %}
-                    <a class="btn btn-info"
-                        style="border: none; font-weight: 600; border-radius: 6px; box-shadow: 0 4px 12px rgba(0,0,0,0.25); transition: transform 0.2s ease;"
-                        onmouseover="this.style.transform='translateY(-2px)';"
-                        onmouseout="this.style.transform='translateY(0)';"
+                    <a style="background-color: transparent; color: rgb(255, 247, 224); border: 2px solid rgb(255, 247, 224); font-weight: 600; border-radius: 6px; padding: 8px 18px; transition: all 0.2s ease, color 0.2s ease; text-decoration: none; display: inline-block;"
+                        onmouseover="this.style.backgroundColor='rgb(255,247,224)'; this.style.color='rgb(54,54,54)'; this.style.transform='translateY(-2px)';"
+                        onmouseout="this.style.backgroundColor='transparent'; this.style.color='rgb(255,247,224)'; this.style.transform='translateY(0)';"
                         href="{% url 'conclusao_chamado' chamado.id %}">Finalizar Chamado</a>
                     {% endif %}
 
                     {% if is_staff and chamado.Esta_Aberto %}
-                    <a class="btn"
-                        style="background-color: rgb(255, 247, 224); color: rgb(54, 54, 54); border: none; font-weight: 600; border-radius: 6px; box-shadow: 0 4px 12px rgba(0,0,0,0.25); transition: transform 0.2s ease;"
-                        onmouseover="this.style.transform='translateY(-2px)';"
-                        onmouseout="this.style.transform='translateY(0)';"
+                    <a style="background-color: transparent; color: rgb(255, 247, 224); border: 2px solid rgb(255, 247, 224); font-weight: 600; border-radius: 6px; padding: 8px 18px; transition: all 0.2s ease, color 0.2s ease; text-decoration: none; display: inline-block;"
+                        onmouseover="this.style.backgroundColor='rgb(255,247,224)'; this.style.color='rgb(54,54,54)'; this.style.transform='translateY(-2px)';"
+                        onmouseout="this.style.backgroundColor='transparent'; this.style.color='rgb(255,247,224)'; this.style.transform='translateY(0)';"
                         href="{% url 'adicionar_comentario' chamado.id %}">Adicionar Comentário</a>
                     {% endif %}
 
-                    <a class="btn"
-                        style="background-color: transparent; color: rgb(255, 247, 224); border: 2px solid rgb(255, 247, 224); font-weight: 600; border-radius: 6px; transition: background-color 0.2s ease, color 0.2s ease;"
-                        onmouseover="this.style.backgroundColor='rgb(255,247,224)'; this.style.color='rgb(54,54,54)';"
-                        onmouseout="this.style.backgroundColor='transparent'; this.style.color='rgb(255,247,224)';"
-                        href="{% url 'comentarios' chamado.id %}">Comentários</a>
+                    <a style="background-color: transparent; color: rgb(255, 247, 224); border: 2px solid rgb(255, 247, 224); font-weight: 600; border-radius: 6px; padding: 8px 18px; transition: all 0.2s ease, color 0.2s ease; text-decoration: none; display: inline-block;"
+                        onmouseover="this.style.backgroundColor='rgb(255,247,224)'; this.style.color='rgb(54,54,54)'; this.style.transform='translateY(-2px)';"
+                        onmouseout="this.style.backgroundColor='transparent'; this.style.color='rgb(255,247,224)'; this.style.transform='translateY(0)';"
+                        href="{% url 'comentarios' chamado.id %}">Comentarios</a>
 
                     {% if chamado.Esta_Aberto == 1 %}
                     <a class="btn btn-danger"
-                        style="border: none; font-weight: 600; border-radius: 6px; box-shadow: 0 4px 12px rgba(0,0,0,0.25); transition: transform 0.2s ease;"
+                        style="border: none; font-weight: 600; border-radius: 6px; box-shadow: 0 4px 12px rgba(0,0,0,0.25); padding: 8px 18px; transition: transform 0.2s ease;"
                         onmouseover="this.style.transform='translateY(-2px)';"
                         onmouseout="this.style.transform='translateY(0)';"
                         href="{% url 'deletar_chamado' chamado.id %}">Cancelar Chamado</a>

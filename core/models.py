@@ -24,6 +24,7 @@ class Chamado(models.Model):
     Prioridade = models.IntegerField()
     Esta_Aberto = models.BooleanField(default=False)
     Comentario = models.TextField(default='Nada Informado.')
+    Finalizador = models.TextField(default='John Doe')
 
 class Comentario(models.Model):
     Mensagem = models.TextField()

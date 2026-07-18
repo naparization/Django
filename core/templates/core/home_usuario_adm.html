@@ -19,26 +19,26 @@
 
             <div
                 style="display: flex; justify-content: center; flex-wrap: wrap; gap: 12px; margin-top: 30px; padding: 0 30px;">
-                <a type="submit" class="btn"
-                    style="background-color: rgb(255, 247, 224); color: rgb(54, 54, 54); border: none; font-weight: 600; padding: 10px 20px; border-radius: 6px; box-shadow: 0 4px 12px rgba(0,0,0,0.25); transition: transform 0.2s ease, box-shadow 0.2s ease; text-decoration: none; display: inline-block;"
-                    onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 16px rgba(0,0,0,0.35)';"
-                    onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 12px rgba(0,0,0,0.25)';"
+                <a style="background-color: transparent; color: rgb(255, 247, 224); border: 2px solid rgb(255, 247, 224); font-weight: 600; border-radius: 6px; padding: 8px 18px; transition: all 0.2s ease, color 0.2s ease; text-decoration: none; display: inline-block;"
+                    onmouseover="this.style.backgroundColor='rgb(255,247,224)'; this.style.color='rgb(54,54,54)'; this.style.transform='translateY(-2px)';"
+                    onmouseout="this.style.backgroundColor='transparent'; this.style.color='rgb(255,247,224)'; this.style.transform='translateY(0)';"
                     href="{% url 'novo_chamado' %}">Novo Chamado</a>
 
-                <a style="background-color: transparent; color: rgb(255, 247, 224); border: 2px solid rgb(255, 247, 224); font-weight: 600; border-radius: 6px; padding: 8px 18px; transition: background-color 0.2s ease, color 0.2s ease; text-decoration: none; display: inline-block;"
-                    onmouseover="this.style.backgroundColor='rgb(255,247,224)'; this.style.color='rgb(54,54,54)';"
-                    onmouseout="this.style.backgroundColor='transparent'; this.style.color='rgb(255,247,224)';"
+                <a style="background-color: transparent; color: rgb(255, 247, 224); border: 2px solid rgb(255, 247, 224); font-weight: 600; border-radius: 6px; padding: 8px 18px; transition: all 0.2s ease, color 0.2s ease; text-decoration: none; display: inline-block;"
+                    onmouseover="this.style.backgroundColor='rgb(255,247,224)'; this.style.color='rgb(54,54,54)'; this.style.transform='translateY(-2px)';"
+                    onmouseout="this.style.backgroundColor='transparent'; this.style.color='rgb(255,247,224)'; this.style.transform='translateY(0)';"
                     href="{% url 'listar_chamados' %}">Meus Chamados</a>
 
-                <a style="background-color: transparent; color: rgb(255, 247, 224); border: 2px solid rgb(255, 247, 224); font-weight: 600; border-radius: 6px; padding: 8px 18px; transition: background-color 0.2s ease, color 0.2s ease; text-decoration: none; display: inline-block;"
-                    onmouseover="this.style.backgroundColor='rgb(255,247,224)'; this.style.color='rgb(54,54,54)';"
-                    onmouseout="this.style.backgroundColor='transparent'; this.style.color='rgb(255,247,224)';"
-                    href="{% url 'listar_chamados_todos' %}">Chamados Ativos</a>
+                <a style="background-color: transparent; color: rgb(255, 247, 224); border: 2px solid rgb(255, 247, 224); font-weight: 600; border-radius: 6px; padding: 8px 18px; transition: all 0.2s ease, color 0.2s ease; text-decoration: none; display: inline-block;"
+                    onmouseover="this.style.backgroundColor='rgb(255,247,224)'; this.style.color='rgb(54,54,54)'; this.style.transform='translateY(-2px)';"
+                    onmouseout="this.style.backgroundColor='transparent'; this.style.color='rgb(255,247,224)'; this.style.transform='translateY(0)';"
+                    href="{% url 'listar_chamados_todos' %}">Chamados</a>
 
-                <a style="background-color: transparent; color: rgb(255, 247, 224); border: 2px solid rgb(255, 247, 224); font-weight: 600; border-radius: 6px; padding: 8px 18px; transition: background-color 0.2s ease, color 0.2s ease; text-decoration: none; display: inline-block;"
-                    onmouseover="this.style.backgroundColor='rgb(255,247,224)'; this.style.color='rgb(54,54,54)';"
-                    onmouseout="this.style.backgroundColor='transparent'; this.style.color='rgb(255,247,224)';"
+                <a style="background-color: transparent; color: rgb(255, 247, 224); border: 2px solid rgb(255, 247, 224); font-weight: 600; border-radius: 6px; padding: 8px 18px; transition: all 0.2s ease, color 0.2s ease; text-decoration: none; display: inline-block;"
+                    onmouseover="this.style.backgroundColor='rgb(255,247,224)'; this.style.color='rgb(54,54,54)'; this.style.transform='translateY(-2px)';"
+                    onmouseout="this.style.backgroundColor='transparent'; this.style.color='rgb(255,247,224)'; this.style.transform='translateY(0)';"
                     href="{% url 'nova_categoria' %}">Adicionar Categoria</a>
+
 
                 <a class="btn btn-danger"
                     style="border-radius: 6px; font-weight: 600; padding: 8px 18px; box-shadow: 0 4px 12px rgba(0,0,0,0.25); transition: transform 0.2s ease;"
@@ -48,7 +48,7 @@
         </div>
 
         <div
-            style="width: 90vh; height: 90vh; align-self: flex-end; opacity: 45%; border-top-right-radius: 50px; background: linear-gradient(135deg, rgb(80,80,80), rgb(40,40,40)); box-shadow: 0 -10px 30px rgba(0,0,0,0.25);">
+            style="width: 90vh; height: 90vh; align-self: flex-end; border-top-right-radius: 50px; background: rgba(80,80,80,0.45); box-shadow: 0 -10px 30px rgba(0,0,0,0.25);">
         </div>
 
     </div>
