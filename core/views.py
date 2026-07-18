@@ -63,7 +63,7 @@ def home(request):
     if (is_staff): 
         return render(request, 'core/home_usuario_adm.html', {'Usuario': Usuario})
     else:
-        return render(request, 'core/home_usuario.html')
+        return render(request, 'core/home_usuario.html', {'Usuario': Usuario})
     
 @login_required
 def fazer_logout(request):
